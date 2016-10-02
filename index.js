@@ -12,8 +12,9 @@ new Vue({
         todo: {
             _id: '',
             description: '',
-            completed: false
+            completed: false,
         },
+        searchValue: '',
         todos: [],
     },
 
@@ -47,14 +48,16 @@ new Vue({
             var newTodo = {
                 description: this.todo.description,
             };
-            this.$http.post('http://localhost:3000/api/v1/todos', newTodo, { emulateJSON: true}).then((events) => {
+            this.$http.post('http://localhost:3000/api/v1/todos', newTodo, {
+                emulateJSON: true
+            }).then((events) => {
                 this.fetchTodos();
+                this.todo.description = "";
             }, (error) => {
                 console.log(error);
                 error = error;
             });
         },
-
         deleteTodo(id) {
             console.log(id);
             this.$http.delete('http://localhost:3000/api/v1/todos/' + id).then((response) => {
