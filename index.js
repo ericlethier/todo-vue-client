@@ -58,6 +58,21 @@ new Vue({
                 error = error;
             });
         },
+        setCompletedTodo(id, completed) {
+            console.log(id);
+            var newTodo = {
+                completed: completed,
+            };
+            this.$http.put('http://localhost:3000/api/v1/todos/' + id, newTodo, {
+                emulateJSON: true
+            }).then((response) => {
+                this.fetchTodos();
+            }, (error) => {
+                console.log(error);
+                error = error;
+            });
+        },
+
         deleteTodo(id) {
             console.log(id);
             this.$http.delete('http://localhost:3000/api/v1/todos/' + id).then((response) => {

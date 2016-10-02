@@ -40,9 +40,9 @@
             <div class="col-sm-12" style="padding-top:20px; padding-bottom:20px;">
                 <div class="table-responsive">
                     <table class="table table-hover" style="border: 1px solid #DDDDDD;">
-                        <tr v-for="todo in todos | filterBy searchValue in 'description' | orderBy 'description'">
+                        <tr v-for="todo in todos | filterBy searchValue in 'description' | orderBy 'completed' 'description'">
                             <td class="col-md-1" align="center" valign="middle">
-                                <input type="checkbox" />
+                                <a href="#" @click="setCompletedTodo(todo._id, !todo.completed)"><i class="glyphicon glyphicon-ok"></i></a>
                             </td>
                             <td class="col-md-10" v-if="todo.completed " style="text-decoration: line-through " align="left" valign="middle">
                                 <p>{{ todo.description }}</p>
