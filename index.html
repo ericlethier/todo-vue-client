@@ -9,12 +9,14 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="static/css/main.css">
     </head>
 
     <body>
 
         <!-- navigation bar -->
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -23,7 +25,7 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand"><i class="glyphicon glyphicon-bullhorn"></i> Todos Vue.js Client</a>
+                    <a class="navbar-brand"><i class="fa fa-bell-o"></i> Todos Vue.js Client</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 </div>
@@ -31,40 +33,69 @@
         </nav>
 
         <!-- main body of our application -->
-        <div class="container" id="todos">
+        <div class="container-fluid" id="todos">
+            <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <ul class="nav nav-sidebar">
+                        <li>
+                            <a href="#">
+                                <button class="btn btn-primary btn-block" type="button">
+                                All
+                              </button>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <button class="btn btn-primary btn-block" type="button">
+                              Active
+                            </button>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <button class="btn btn-primary btn-block" type="button">
+                              Archived
+                            </button>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
 
-            <div class="col-sm-12">
-                <input id="searchValue" name="searchValue" type="text" placeholder="Search..." class="form-control input-lg" v-model="searchValue">
-            </div>
-            <!-- show the todos -->
-            <div class="col-sm-12" style="padding-top:20px; padding-bottom:20px;">
-                <div class="table-responsive">
-                    <table class="table table-hover" style="border: 1px solid #DDDDDD;">
-                        <tr v-for="todo in todos | filterBy searchValue in 'description' | orderBy 'completed' 'description'">
-                            <td class="col-md-1" align="center" valign="middle">
-                                <a href="#" @click="setCompletedTodo(todo._id, !todo.completed)"><i class="glyphicon glyphicon-ok"></i></a>
-                            </td>
-                            <td class="col-md-10" v-if="todo.completed " style="text-decoration: line-through " align="left" valign="middle">
-                                <p>{{ todo.description }}</p>
-                            </td>
-                            <td class="col-md-10" v-if="!todo.completed " align="left" valign="middle">
-                                <p>{{ todo.description }}</p>
-                            </td>
-                            <td class="col-md-1" align="right" valign="middle">
-                                <button class="btn btn-xs btn-danger " @click="deleteTodo(todo._id) ">Delete</button>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <div class="col-sm-12">
+                        <input id="searchValue" name="searchValue" type="text" placeholder="Search..." class="form-control input-lg" v-model="searchValue">
+                    </div>
+                    <!-- show the todos -->
+                    <div class="col-sm-12" style="padding-top:20px; padding-bottom:20px;">
+                        <div class="table-responsive">
+                            <table class="table table-hover" style="border: 1px solid #DDDDDD;">
+                                <tr v-for="todo in todos | filterBy searchValue in 'description' | orderBy 'completed' 'description'">
+                                    <td class="col-md-1" align="center" valign="middle">
+                                        <a href="#" v-if="!todo.completed " @click="setCompletedTodo(todo._id, !todo.completed)"><i class="fa fa-square-o"></i></a>
+                                        <a href="#" v-if="todo.completed " @click="setCompletedTodo(todo._id, !todo.completed)"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+
+                                    </td>
+                                    <td class="col-md-10" v-if="todo.completed " style="text-decoration: line-through " align="left" valign="middle">
+                                        <p>{{ todo.description }}</p>
+                                    </td>
+                                    <td class="col-md-10" v-if="!todo.completed " align="left" valign="middle">
+                                        <p>{{ todo.description }}</p>
+                                    </td>
+                                    <td class="col-md-1" align="right" valign="middle">
+                                        <button class="btn btn-xs btn-danger " @click="deleteTodo(todo._id) ">Delete</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-10 col-md-11 ">
+                        <input id="description " name="description " type="description " placeholder="Todo... " @keyup.enter="addTodo " required class="form-control input-lg " v-model="todo.description ">
+                    </div>
+                    <div class="col-sm-2 col-md-1 ">
+                        <button class="btn btn-primary btn-block input-lg " @click="addTodo "><i class="fa fa-plus "></i></button>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-10 col-md-11 ">
-                <input id="description " name="description " type="description " placeholder="Todo... " @keyup.enter="addTodo " required class="form-control input-lg " v-model="todo.description ">
-            </div>
-            <div class="col-sm-2 col-md-1 ">
-                <button class="btn btn-primary btn-block input-lg " @click="addTodo "><i class="glyphicon glyphicon-plus "></i></button>
-            </div>
-
-        </div>
         </div>
 
         <!-- JS -->
